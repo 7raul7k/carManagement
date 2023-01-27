@@ -1,6 +1,7 @@
 package ro.mycode.carManagement.services;
 
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import ro.mycode.carManagement.exceptions.CustomerNotFoundException;
 import ro.mycode.carManagement.exceptions.CustomerWasFoundException;
@@ -54,4 +55,50 @@ public class CustomerService {
             throw new CustomerNotFoundException();
         }
     }
+
+    @Transactional
+    @Modifying
+    public void updateFullName(String newName,String fullName,String email){
+        Optional<Customer> customer = this.customerRepo.getCustomerByNameAndEmail(fullName,email);
+        if(customer.isEmpty()==false){
+            this.customerRepo.updateFullName(newName,email);
+        }else{
+            throw new CustomerNotFoundException();
+        }
+
+    }
+
+    @Transactional
+    @Modifying
+    public void updateAge(int newAge,String fullName,String email){
+        Optional<Customer> customer = this.customerRepo.getCustomerByNameAndEmail(fullName,email);
+        if(customer.isEmpty()==false){
+            this.customerRepo.updateAge(newAge,email);
+        }else{
+            throw new CustomerNotFoundException();
+        }
+    }
+
+    @Transactional
+    @Modifying
+    public void updateAdress(String newAdress,String fullName,String email){
+        Optional<Customer> customer = this.customerRepo.getCustomerByNameAndEmail(fullName,email);
+        if(customer.isEmpty()==false){
+            this.customerRepo.updateAdress(newAdress,email);
+        }else{
+            throw new CustomerNotFoundException();
+        }
+    }
+
+    @Transactional
+    @Modifying
+    public void updateDomain(String newDomain,String fullName,String email){
+        Optional<Customer> customer = this.customerRepo.getCustomerByNameAndEmail(fullName,email);
+        if(customer.isEmpty()==false){
+            this.customerRepo.updateDomain(newDomain,email);
+        }else{
+            throw new CustomerNotFoundException();
+        }
+    }
+
 }

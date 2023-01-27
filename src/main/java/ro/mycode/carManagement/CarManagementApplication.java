@@ -21,9 +21,9 @@ public class CarManagementApplication {
 	CommandLineRunner commandLineRunner (CustomerService customerService){
 		return args -> {
 
-           Customer customer = new Customer("Andrei Popescu","popescuandrei@gmail.com",23,"Bucuresti","IT");
+           Customer customer = new Customer("ceva","popescuandrei@gmail.com",25,"Iasi","Marketing");
 
-		   customerService.removeCustomer(customer.getFullName(), customer.getEmail());
+		   customerService.updateDomain("Marketing",customer.getFullName(),customer.getEmail());
 		};
 	}
 
