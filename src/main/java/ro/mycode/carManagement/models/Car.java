@@ -1,4 +1,4 @@
-package ro.mycode.carManagement.resources;
+package ro.mycode.carManagement.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -6,12 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -85,21 +83,20 @@ public class Car {
   private String color;
 
 
-  @ManyToOne(
-
-         cascade = CascadeType.PERSIST
-  )
-
+  @ManyToOne
   @JoinColumn(name="customer_id",
           referencedColumnName = "id",
           foreignKey = @ForeignKey(name="customer_id_fk")
   )
   @JsonBackReference
-
   private  Customer customer;
 
-
-
-
-
+  public Car(String make, String owner, int year, String engineType, int horsePower, String color) {
+    this.make = make;
+    this.owner = owner;
+    this.year = year;
+    this.engineType = engineType;
+    this.horsePower = horsePower;
+    this.color = color;
+  }
 }

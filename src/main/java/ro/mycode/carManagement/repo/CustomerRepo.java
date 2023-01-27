@@ -4,10 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ro.mycode.carManagement.resources.Customer;
+import ro.mycode.carManagement.models.Customer;
 
-import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -33,4 +31,7 @@ public interface CustomerRepo extends JpaRepository<Customer,Long> {
     @Modifying
     @Query("UPDATE Customer m set m.domain = ?1 where m.email = ?2")
     void updateDomain(String newDomain,String email);
+
+
+    Optional<Customer> findCustomerByEmail(String email);
 }

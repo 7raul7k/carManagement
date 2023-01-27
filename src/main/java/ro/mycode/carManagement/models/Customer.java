@@ -1,12 +1,14 @@
-package ro.mycode.carManagement.resources;
+package ro.mycode.carManagement.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.jpa.repository.Modifying;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotEmpty;
 
 import java.util.ArrayList;
@@ -80,8 +82,9 @@ public class Customer {
             mappedBy = "customer",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
+    @JsonManagedReference
     private List<Car> carList= new ArrayList<>();
 
 
@@ -97,6 +100,33 @@ public class Customer {
     public String toString(){
         return id+","+fullName+","+email+","+age+","+adress+","+domain;
     }
+
+
+    //addCat
+
+
+    public void addCar(Car car){
+
+       this.loadLazzyCollection();
+        car.setCustomer(this);
+        this.carList.add(car);
+
+    }
+
+
+    public void eraseCar(Car car){
+
+
+        this.carList.remove(car);
+    }
+
+
+    @Transactional
+    public void loadLazzyCollection(){
+
+        this.carList.size();
+    }
+
 
 }
 

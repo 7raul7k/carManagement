@@ -1,14 +1,14 @@
 package ro.mycode.carManagement.services;
 
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import ro.mycode.carManagement.exceptions.CustomerNotFoundException;
 import ro.mycode.carManagement.exceptions.CustomerWasFoundException;
 import ro.mycode.carManagement.exceptions.ListEmptyException;
 import ro.mycode.carManagement.repo.CustomerRepo;
-import ro.mycode.carManagement.resources.Customer;
+import ro.mycode.carManagement.models.Customer;
 
+import javax.swing.text.MaskFormatter;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +17,9 @@ import java.util.Optional;
 public class CustomerService {
 
     private CustomerRepo customerRepo;
+
+
+    private MaskFormatter
 
     public CustomerService(CustomerRepo customerRepo) {
         this.customerRepo = customerRepo;

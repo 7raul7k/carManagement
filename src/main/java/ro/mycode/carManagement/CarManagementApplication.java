@@ -4,10 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import ro.mycode.carManagement.resources.Customer;
-import ro.mycode.carManagement.services.CustomerService;
-
-import java.util.List;
+import ro.mycode.carManagement.models.Car;
+import ro.mycode.carManagement.models.Customer;
+import ro.mycode.carManagement.repo.CustomerRepo;
 
 @SpringBootApplication
 public class CarManagementApplication {
@@ -18,12 +17,28 @@ public class CarManagementApplication {
 
 
 	@Bean
-	CommandLineRunner commandLineRunner (CustomerService customerService){
+	CommandLineRunner commandLineRunner ( CustomerRepo customerRepo){
 		return args -> {
 
-           Customer customer = new Customer("ceva","popescuandrei@gmail.com",25,"Iasi","Marketing");
+           Customer customer = customerRepo.findCustomerByEmail("alilburn2r@msu.edu").get();
 
-		   customerService.updateDomain("Marketing",customer.getFullName(),customer.getEmail());
+		   Car car = new Car("Audi","Allianora Lilburn",2009,"benzina",120,"gray");
+
+
+
+
+		   customer.addCar(car);
+
+
+//
+		   customerRepo.save(customer);
+
+
+
+
+
+
+
 		};
 	}
 
