@@ -34,4 +34,6 @@ public interface CustomerRepo extends JpaRepository<Customer,Long> {
 
 
     Optional<Customer> findCustomerByEmail(String email);
+
+
 }

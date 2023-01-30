@@ -2,26 +2,25 @@ package ro.mycode.carManagement.services;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
-import ro.mycode.carManagement.exceptions.CustomerNotFoundException;
-import ro.mycode.carManagement.exceptions.CustomerWasFoundException;
-import ro.mycode.carManagement.exceptions.ListEmptyException;
+import ro.mycode.carManagement.exceptions.*;
+import ro.mycode.carManagement.models.Car;
+import ro.mycode.carManagement.repo.CarRepo;
 import ro.mycode.carManagement.repo.CustomerRepo;
 import ro.mycode.carManagement.models.Customer;
 
-import javax.swing.text.MaskFormatter;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CustomerService {
+public class CarManagementService {
 
     private CustomerRepo customerRepo;
 
 
-    private MaskFormatter
+    private CarRepo carRepo;
 
-    public CustomerService(CustomerRepo customerRepo) {
+    public CarManagementService(CustomerRepo customerRepo) {
         this.customerRepo = customerRepo;
     }
 
@@ -103,5 +102,41 @@ public class CustomerService {
             throw new CustomerNotFoundException();
         }
     }
+
+    public List<Car> showAllCars(String owner){
+        List<Car> cars = this.carRepo.getAllCars(owner);
+
+        if(cars.isEmpty() == false){
+            return cars;
+        }else{
+            throw new ListEmptyException();
+        }
+    }
+
+    @Transactional
+    @Modifying
+    public void addCars(Car car){
+
+        Optional<Car> car1 = this.carRepo.findCarbyOwnerAndMake(car.getOwner(), car.getMake());
+        if(car1.isEmpty()){
+        this.carRepo.save(car);
+        }else{
+            throw new CarWasFoundException();
+        }
+    }
+
+    @Transactional
+    @Modifying
+    public void removeCar(String owner,String make){
+        Optional<Car> car = this.carRepo.findCarbyOwnerAndMake(owner, make);
+
+        if(car.isEmpty()== false){
+            this.carRepo.delete(car.get());
+        }else{
+            throw new CarWasFoundException();
+        }
+    }
+
+
 
 }
