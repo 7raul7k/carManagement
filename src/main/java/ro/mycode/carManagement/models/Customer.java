@@ -4,13 +4,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.jpa.repository.Modifying;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotEmpty;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,22 +99,24 @@ public class Customer {
     }
 
 
-    //addCat
-
+    //addCar
 
     public void addCar(Car car){
-
        this.loadLazzyCollection();
         car.setCustomer(this);
-        this.carList.add(car);
-
+        for(Car c: carList) {
+            if(!c.equals(car)){
+            this.carList.add(car);
+        }
+        }
     }
 
-
-    public void eraseCar(Car car){
-
-
-        this.carList.remove(car);
+    public void eraseCar(Car car) {
+        for (Car c : carList) {
+            if(c.equals(car)){
+            this.carList.remove(car);
+        }
+        }
     }
 
 
@@ -126,6 +125,7 @@ public class Customer {
 
         this.carList.size();
     }
+
 
 
 }

@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -99,4 +98,10 @@ public class Car {
     this.horsePower = horsePower;
     this.color = color;
   }
+
+  @Override
+  public String toString(){
+    return id +","+make+","+owner+","+year+","+engineType+","+horsePower+","+color;
+  }
+
 }
