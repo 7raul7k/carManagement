@@ -4,6 +4,8 @@ package ro.mycode.carManagement.rest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ro.mycode.carManagement.dto.CarDTO;
+import ro.mycode.carManagement.dto.CustomerDTO;
 import ro.mycode.carManagement.models.Car;
 import ro.mycode.carManagement.models.Customer;
 import ro.mycode.carManagement.services.CustomerService;
@@ -68,6 +70,20 @@ public class CustomerResources {
         this.customerService.deleteCar(make,owner,email);
 
         return new ResponseEntity<>("Car was deleted",HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/updateCustomer")
+    public ResponseEntity<String> updateCustomer(@RequestBody CustomerDTO customerDTO){
+        this.customerService.updateCustomer(customerDTO);
+
+        return new ResponseEntity<>("Customer was updated!",HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/updateCar")
+    public ResponseEntity<String> updateCar(@RequestBody CarDTO carDTO){
+        this.customerService.updateCar(carDTO);
+
+        return new ResponseEntity<>("Car was updated!",HttpStatus.ACCEPTED);
     }
 
 

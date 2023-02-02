@@ -2,6 +2,8 @@ package ro.mycode.carManagement.services;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import ro.mycode.carManagement.dto.CarDTO;
+import ro.mycode.carManagement.dto.CustomerDTO;
 import ro.mycode.carManagement.exceptions.CarNotFoundException;
 import ro.mycode.carManagement.exceptions.CustomerNotFoundException;
 import ro.mycode.carManagement.exceptions.CustomerWasFoundException;
@@ -94,7 +96,6 @@ public class CustomerService {
 
     public void deleteCar(String make,String owner,String email){
 
-
         Optional<Car> car = this.carRepo.findCarbyOwnerAndMake(owner,make);
         if(car.isEmpty()==false) {
             Customer customer = this.customerRepo.getCustomerByNameAndEmail(owner, email).get();
@@ -107,6 +108,44 @@ public class CustomerService {
         }
 
 
+    }
+
+    @Transactional
+    public void updateCustomer(CustomerDTO customerDTO){
+        Optional<Customer> customer = this.customerRepo.findCustomerByEmail(customerDTO.getEmail());
+
+        if(customer.isEmpty()){
+            throw new CustomerNotFoundException();
+        }else{
+            if(customerDTO.getFullName()!=null){
+                customer.get().setFullName(customerDTO.getFullName());
+            }else if(customerDTO.getAge()>0){
+                customer.get().setAge(customerDTO.getAge());
+            } else if (customerDTO.getAdress()!=null) {
+                customer.get().setAdress(customerDTO.getAdress());
+            } else if (customerDTO.getDomain()!=null) {
+                customer.get().setDomain(customerDTO.getDomain());
+            }
+
+        }
+        this.customerRepo.saveAndFlush(customer.get());
+    }
+
+    @Transactional
+    public void updateCar(CarDTO carDTO){
+        Optional<Car> car = this.carRepo.findCarbyOwnerAndMake(carDTO.getOwner(), carDTO.getMake());
+        if(car.isEmpty()){
+            throw new CarNotFoundException();
+        }else if (carDTO.getYear()>0){
+            car.get().setYear(carDTO.getYear());
+        } else if (carDTO.getEngineType()!=null) {
+            car.get().setEngineType(carDTO.getEngineType());
+        } else if (carDTO.getHorsePower()>0) {
+            car.get().setHorsePower(carDTO.getHorsePower());
+        }else if(carDTO.getColor()!=null){
+            car.get().setColor(carDTO.getColor());
+        }
+        this.carRepo.saveAndFlush(car.get());
     }
 
 
