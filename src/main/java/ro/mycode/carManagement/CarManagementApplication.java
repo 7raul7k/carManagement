@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import ro.mycode.carManagement.dto.CarDTO;
 import ro.mycode.carManagement.dto.CustomerDTO;
 import ro.mycode.carManagement.services.CustomerService;
 
@@ -47,10 +48,16 @@ public class CarManagementApplication {
 			//removeCustomer
 //			customerService.removeCustomer("Cristian Popovici","cristianpopovici@gmail.com");
 
-           //updateCustomer
-			CustomerDTO customerDTO = new CustomerDTO("Andrei Popescu","andreipopescu@gmail.com",24,"Iasi","Marketing");
-
-			customerService.updateCustomer(customerDTO);
+//           //updateCustomer
+//			CustomerDTO customerDTO = new CustomerDTO("Andrei Popescu","andreipopescu@gmail.com",24,"Iasi","Marketing");
+//
+//			customerService.updateCustomer(customerDTO);
+//
+//			//updateCar
+//
+//			CarDTO carDTO = new CarDTO("Audi","Andrei Popescu",2023,"motorina",200,"gri");
+//
+//			customerService.updateCar(carDTO);
 
 	};
 
